@@ -146,7 +146,7 @@ class Kalaha:
         prev_board = self.board.copy()
         
         # Log the move
-        self.log_move(f"You: Pit {i}")
+        self.log_move(f"You -> {i+1}")
         
         # Send the move to the server
         response = requests.post(f"{SERVER_URL}/play_move", json={"move": i}).json()
@@ -159,7 +159,7 @@ class Kalaha:
         for j in range(7, 13):
             if prev_board[j] > 0 and self.board[j] == 0:
                 # AI likely moved from this pit
-                self.log_move(f"AI: Pit {j}")
+                self.log_move(f"AI -> {j+1}")
                 break
         
         # Update the board display
