@@ -19,15 +19,24 @@ class KalahaGame:
     def __init__(self):
         self.board = [4] * 6 + [0] + [4] * 6 + [0]
         self.current_player = 0
+        self.game_over = False
 
     def is_terminal(self):
         return sum(self.board[:6]) == 0 or sum(self.board[7:13]) == 0
 
     def get_winner(self):
-        if not self.is_terminal():
+        # Don't calculate winner multiple times
+        if self.game_over:
             return None
+
+        # Collect remaining stones into stores
         self.board[6] += sum(self.board[:6])
         self.board[13] += sum(self.board[7:13])
+        for i in list(range(6)) + list(range(7, 13)):
+            self.board[i] = 0
+
+        self.game_over = True
+
         if self.board[13] > self.board[6]:
             return 1  # AI wins
         elif self.board[6] > self.board[13]:
@@ -51,6 +60,7 @@ class KalahaGame:
             new_game.board[index] += 1
             seeds -= 1
 
+        # Capture logic
         if new_game.current_player == 0 and 0 <= index < 6 and new_game.board[index] == 1:
             new_game.board[6] += new_game.board[index] + new_game.board[12 - index]
             new_game.board[index] = new_game.board[12 - index] = 0
@@ -58,6 +68,7 @@ class KalahaGame:
             new_game.board[13] += new_game.board[index] + new_game.board[12 - index]
             new_game.board[index] = new_game.board[12 - index] = 0
 
+        # Extra turn logic
         if index != (6 if new_game.current_player == 0 else 13):
             new_game.current_player = 1 - new_game.current_player
 
@@ -111,12 +122,13 @@ game = KalahaGame()
 
 @app.route('/get_state', methods=['GET'])
 def get_state():
-    if game.is_terminal() or game.board[6] > 25 or game.board[13] > 25:
+    if not game.game_over and (game.is_terminal() or game.board[6] > 25 or game.board[13] > 25):
         winner = game.get_winner()
-        result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
-        moves_log_file.write(f"Game over detected on state request! Winner: {result}\n")
-        moves_log_file.write(f"Final board: {game.board}\n\n")
-        moves_log_file.flush()
+        if winner is not None:
+            result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
+            moves_log_file.write(f"Game over detected on state request! Winner: {result}\n")
+            moves_log_file.write(f"Final board: {game.board}\n\n")
+            moves_log_file.flush()
     return jsonify({"board": game.board, "current_player": game.current_player})
 
 
@@ -144,17 +156,13 @@ def play_move():
             moves_log_file.write(f"Board after: {game.board}\n")
             moves_log_file.flush()
 
-    if game.is_terminal():
+    if not game.game_over and (game.is_terminal() or game.board[6] > 25 or game.board[13] > 25):
         winner = game.get_winner()
-        result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
-        moves_log_file.write(f"Game over. Winner: {result}\n")
-        moves_log_file.flush()
-
-    if game.board[6] > 25 or game.board[13] > 25:
-        winner_text = "Player" if game.board[6] > game.board[13] else "AI"
-        moves_log_file.write(f"Game over by score threshold. Winner: {winner_text}\n")
-        moves_log_file.write(f"Final score - Player: {game.board[6]}, AI: {game.board[13]}\n\n")
-        moves_log_file.flush()
+        if winner is not None:
+            result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
+            moves_log_file.write(f"Game over. Winner: {result}\n")
+            moves_log_file.write(f"Final score - Player: {game.board[6]}, AI: {game.board[13]}\n\n")
+            moves_log_file.flush()
 
     return jsonify({"board": game.board, "current_player": game.current_player})
 

@@ -18,6 +18,9 @@ class Kalaha:
 
         self.turn_label = self.make_label("Your Turn", 16, bold=True)
         self.status_label = self.make_label("", 14)
+        self.create_labels()
+        
+
 
         self.buttons_data = []
         self.create_board()
@@ -40,6 +43,11 @@ class Kalaha:
         label = tk.Label(self.master, text=text, font=font, fg="white", bg=self.light_brown)
         label.pack(pady=5)
         return label
+    
+    def create_labels(self):
+        label_frame = tk.Frame(self.master, bg=self.light_brown)
+        label_frame.pack(pady=(5, 0))
+        tk.Label(label_frame, text="← AI Side", font=("Arial", 12), fg="white", bg=self.light_brown).pack(side=tk.LEFT, expand=True)
 
     def create_rounded_button(self, parent, i, is_store=False, is_restart=False):
         canvas_size = 90 if is_restart else (70 if is_store else 60)
@@ -80,6 +88,7 @@ class Kalaha:
             self.buttons_data.append(btn_data)
 
     def create_restart_button(self):
+        tk.Label(self.master, text="Player Side →", font=("Arial", 12), fg="white", bg=self.light_brown).pack(pady=(10, 2))
         btn_data = self.create_rounded_button(self.master, None, is_restart=True)
         btn = btn_data['canvas']
         btn.pack(pady=10)
