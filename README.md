@@ -45,7 +45,7 @@ Intro-to-AI/
 
 ---
 
-## 💻 How to Run the Game
+## How to Run the Game
 
 ### 1. Clone the Repository
 ```bash
@@ -78,7 +78,7 @@ python server.py
 ```
 
 ### 5. Launch the GUI (Frontend)
-Open a new terminal window and run:
+Let the Server.py run and open a new terminal window and run:
 ```bash
 python GUI.py
 ```
