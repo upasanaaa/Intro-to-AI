@@ -4,7 +4,7 @@ A simple and fun Kalaha (Mancala) board game where you play against an AI using 
 
 ---
 
-## 🚀 Features
+## Features
 
 - Classic Kalaha (Mancala) gameplay
 - Play against AI with a clean GUI
@@ -15,7 +15,7 @@ A simple and fun Kalaha (Mancala) board game where you play against an AI using 
 
 ---
 
-## 🧰 Requirements
+## Requirements
 
 - Python 3.9 or higher
 - Flask
@@ -33,7 +33,7 @@ pip install flask requests
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Intro-to-AI/
@@ -85,7 +85,7 @@ python GUI.py
 
 ---
 
-## 🐧 Notes for macOS/Linux Users
+## Notes for macOS/Linux Users
 
 - Use `python3` instead of `python` if needed:
 ```bash
@@ -105,7 +105,7 @@ python3 GUI.py
 
 ---
 
-## 🎮 Game Rules
+## Game Rules
 
 - The board consists of 14 pits: 6 on each side and 2 stores (Kalahs)
 - Each pit starts with 4 stones
@@ -119,7 +119,7 @@ python3 GUI.py
 
 ---
 
-## 🧠 How the AI Works
+## How the AI Works
 
 - Implements Minimax algorithm with depth limit
 - Uses alpha-beta pruning to optimize search
@@ -127,7 +127,7 @@ python3 GUI.py
 
 ---
 
-## ⚠️ Troubleshooting
+## Troubleshooting
 
 - Flask not installed? → `pip install flask`
 - Requests missing? → `pip install requests`
