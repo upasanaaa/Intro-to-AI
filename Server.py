@@ -111,7 +111,7 @@ game = KalahaGame()
 
 @app.route('/get_state', methods=['GET'])
 def get_state():
-    if game.is_terminal() or game.board[6] > 20 or game.board[13] > 20:
+    if game.is_terminal() or game.board[6] > 25 or game.board[13] > 25:
         winner = game.get_winner()
         result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
         moves_log_file.write(f"Game over detected on state request! Winner: {result}\n")
@@ -148,10 +148,9 @@ def play_move():
         winner = game.get_winner()
         result = "AI" if winner == 1 else "Human" if winner == -1 else "Draw"
         moves_log_file.write(f"Game over. Winner: {result}\n")
-        moves_log_file.write(f"Final score - Player: {game.board[6]}, AI: {game.board[13]}\n\n")
         moves_log_file.flush()
 
-    if game.board[6] > 20 or game.board[13] > 20:
+    if game.board[6] > 25 or game.board[13] > 25:
         winner_text = "Player" if game.board[6] > game.board[13] else "AI"
         moves_log_file.write(f"Game over by score threshold. Winner: {winner_text}\n")
         moves_log_file.write(f"Final score - Player: {game.board[6]}, AI: {game.board[13]}\n\n")

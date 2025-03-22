@@ -111,7 +111,7 @@ class Kalaha:
         elif not self.game_over:
             self.turn_label.config(text="Your Turn")
 
-        if self.board[6] > 20 or self.board[13] > 20:
+        if self.board[6] > 25 or self.board[13] > 25:
             winner = "AI Wins! 🎉" if self.board[13] > self.board[6] else "You Win! 🎉"
             self.status_label.config(text=winner)
             self.turn_label.config(text="Game Over")
