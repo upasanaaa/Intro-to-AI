@@ -49,7 +49,7 @@ Intro-to-AI/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/Intro-to-AI.git
+git clone https://github.com/upasanaaa/Intro-to-AI.git
 cd Intro-to-AI
 ```
 
