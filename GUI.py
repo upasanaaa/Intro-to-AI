@@ -144,10 +144,10 @@ class Kalaha:
                     self.log_move(f"AI -> {j+1}")
                     break
 
-        self.update_board()  # Only call once, avoid duplicate Game Over
+        self.update_board()  #only called once to avoid duplicate Game Over
         if not self.game_over:
             time.sleep(1)
-            self.update_board()  # Delay to visualize AI move
+            self.update_board()  #elay to visualize AI move
         self.update_board()
 
     def restart_game(self):

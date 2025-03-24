@@ -5,10 +5,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Configurable AI settings
-AI_DEPTH = 6  # Search depth used by Minimax
+#configurable AI settings
+AI_DEPTH = 6  #search depth used by Minimax
 
-# Logging setup
+#logging setup
 moves_log_filename = f"kalaha_moves_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 moves_log_file = open(moves_log_filename, "w")
 moves_log_file.write("=== Kalaha Game Moves Log ===\n")
@@ -25,7 +25,7 @@ class KalahaGame:
         return sum(self.board[:6]) == 0 or sum(self.board[7:13]) == 0
 
     def get_winner(self):
-        # Don't calculate winner multiple times
+        #don't calculate winner multiple times
         if self.game_over:
             return None
 
@@ -40,8 +40,8 @@ class KalahaGame:
         if self.board[13] > self.board[6]:
             return 1  # AI wins
         elif self.board[6] > self.board[13]:
-            return -1  # Human wins
-        return 0  # Draw
+            return -1  #human wins
+        return 0  #draw
 
     def get_valid_moves(self):
         start, end = (0, 6) if self.current_player == 0 else (7, 13)
@@ -60,7 +60,7 @@ class KalahaGame:
             new_game.board[index] += 1
             seeds -= 1
 
-        # Capture logic
+        #capture logic
         if new_game.current_player == 0 and 0 <= index < 6 and new_game.board[index] == 1:
             new_game.board[6] += new_game.board[index] + new_game.board[12 - index]
             new_game.board[index] = new_game.board[12 - index] = 0
@@ -68,7 +68,7 @@ class KalahaGame:
             new_game.board[13] += new_game.board[index] + new_game.board[12 - index]
             new_game.board[index] = new_game.board[12 - index] = 0
 
-        # Extra turn logic
+        #extra turn logic
         if index != (6 if new_game.current_player == 0 else 13):
             new_game.current_player = 1 - new_game.current_player
 
